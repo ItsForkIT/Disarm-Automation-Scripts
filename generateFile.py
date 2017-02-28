@@ -1,6 +1,23 @@
 import sys,os
 import datetime
 import random
+
+if ((len(sys.argv) < 3)):
+    print """\
+This script create binary image files inside the folder to the format accepted by DMS App
+
+Usage:  python generateFileDMS.py latitude longitude noOfFiles x_range y_range SOURCE time_range
+(Files will be created inside sync directory)
+
+1. Filename will be randomly spread in the area near latitude and longitude and size will be in between x_range and y_range
+2. Give SOURCE the same as given in DMS app
+3. time_range : Time difference from the current time
+4. dirName : Directory at which you want to rename the files
+5. x_range : Minimum Size of File
+6. y_range : Maximum Size of File
+"""
+    sys.exit(1)
+
 lat = float(sys.argv[1])
 lon = float(sys.argv[2])
 noOfFiles = int(sys.argv[3])
