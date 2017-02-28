@@ -1,6 +1,30 @@
 import sys,os
 import datetime
 import random
+if ((len(sys.argv) < 3)):
+    print """\
+This script renames files inside the folder to the format accepted by DMS App
+
+Usage:  python generateFileDMS.py latitude longitude SOURCE time_range dirName
+1. Filename will be randomly spread in the area near latitude and longitude
+2. Give SOURCE the same as given in DMS app
+3. time_range : Time difference from the current time
+4. dirName : Directory at which you want to rename the files
+
+
+EXTENSION CONVERSION
+---------------------
+1. .webm -> .mp4
+
+TYPE CONVERSION
+---------------------
+1. .jpg -> IMG
+2. .mp4 -> VID
+3. .webm -> VID
+4. .txt -> SMS
+"""
+    sys.exit(1)
+
 
 lat = float(sys.argv[1])
 lon = float(sys.argv[2])
@@ -14,6 +38,7 @@ SOURCE = sys.argv[3]
 time_range = int(sys.argv[4])
 
 dirName = sys.argv[5]
+
 
 type_list = ["Victim","Shelter","Food","Health"]
 
@@ -64,6 +89,7 @@ def getTime():
 	d1 = d2 - datetime.timedelta(hours=time_range)
 	
 	return random_date(d1, d2).strftime('%Y%m%d%H%M%S')
+
 
 onlyfiles = [f for f in os.listdir(dirName) if os.path.isfile(os.path.join(dirName, f))]
 
