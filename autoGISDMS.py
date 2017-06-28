@@ -52,32 +52,34 @@ type_list = ["Victim","Shelter","Food","Health"]
 shape_list = ["Point", "LineString", "Polygon"]
 source_list = []
 
-# Spread messages in are of lat-long 
 def getLatLong():
+	"""
+	Spread messages in area of lat-long (More spreadVal more spreaded area)
+	"""
 	val = random.randint(0,100)
 	if val < 20:
-		ddd = 2000
+		spreadVal = 2000
 
 	else:
-		ddd = 1500
+		spreadVal = 1500
 
 	v = random.randint(0,3)
 	if v == 0:
-		la = float(lat - float(random.randint(0,ddd))/1000000.0)
-		lo = float(lon + float(random.randint(0,ddd))/1000000.0)
+		la = float(lat - float(random.randint(0,spreadVal))/1000000.0)
+		lo = float(lon + float(random.randint(0,spreadVal))/1000000.0)
 	elif v==1:
-		la = float(lat + float(random.randint(0,ddd))/1000000.0)
-		lo = float(lon - float(random.randint(0,ddd))/1000000.0)
+		la = float(lat + float(random.randint(0,spreadVal))/1000000.0)
+		lo = float(lon - float(random.randint(0,spreadVal))/1000000.0)
 	elif v==2:
-		la = float(lat + float(random.randint(0,ddd))/1000000.0)
-		lo = float(lon + float(random.randint(0,ddd))/1000000.0)
+		la = float(lat + float(random.randint(0,spreadVal))/1000000.0)
+		lo = float(lon + float(random.randint(0,spreadVal))/1000000.0)
 	elif v==3:
-		la = float(lat - float(random.randint(0,ddd))/1000000.0)
-		lo = float(lon - float(random.randint(0,ddd))/1000000.0)
+		la = float(lat - float(random.randint(0,spreadVal))/1000000.0)
+		lo = float(lon - float(random.randint(0,spreadVal))/1000000.0)
 	
 	la = "%2.6f"% (la,)
 	lo = "%2.6f"% (lo,)
-	#print str(la) +  ',' + str(lo)
+	
 	return (la,lo)
 
 
@@ -101,25 +103,27 @@ def getTime():
 	return random_date(d1, d2).strftime('%Y%m%d%H%M%S')
 
 def computeSourceList():
+	"""
+	Create Indian Telephonic Numbers for total no. of devices
+	"""
 	count = 0
 	while count < noOfDevices:
 		# Generate Indian Phone Numbers
 		source_list.append(exrex.getone('[7-9]{2}\d{8}').encode('ascii', 'ignore'))
 		count = count + 1
-def generatePoint():
-	print "-- Generating Point --"
-def generateLineString():
-	print "-- Generating LineString --"
-def generatePolygon():
-	print "-- Generating Polygon --"
 
+def generatePoint():
+	return getLatLong()
+
+# Create Indian Phone Numbers List based on total noOfDevices entered
 computeSourceList()
+
+# Generate GIS messages 
 for i in range(noOfFiles):
-	la,lo = getLatLong()
 
 	time_r = getTime()
-#	print "IMG_" + str(TTL) + "_" + random.choice(type_list) + "_" + random.choice(source_list) + "_defaultMcs_" + str(la) + "_" + str(lo) + "_" + time_r + "_1.jpg"	
-	# Create 
+
+	# Create geojson messages
 	geoMessage = {}
 	geoMessage["type"] = "FeatureCollection"
 	geoMessage["features"] = []
@@ -133,19 +137,37 @@ for i in range(noOfFiles):
 	geoMessage["features"][0]["properties"]["Source"] = random.choice(source_list) 
 	geoMessage["features"][0]["properties"]["PO"]["timestamp"] = getTime()
 	geoMessage["features"][0]["properties"]["PR"]["timestamp"] = getTime()
-	geoMessage["features"][0]["properties"]["PO"]["coordinate"] = getLatLong()
-	geoMessage["features"][0]["properties"]["PR"]["coordinate"] = getLatLong()
+	geoMessage["features"][0]["properties"]["PO"]["coordinate"] = map(float, getLatLong())
+	geoMessage["features"][0]["properties"]["PR"]["coordinate"] = map(float, getLatLong())
 	geoMessage["features"][0]["geometry"] = {}
 
 	# Generate Random Shapes (1 - Point, 2 - LineString, 3 - Polygon)
-	shape_rand = random.choice(shape_list)
+	shape_rand = "Polygon"
 
 	if shape_rand == "Point":
-		generatePoint()
+		# Create Point coordinates
+		pointVal = generatePoint()	
+		geoMessage["features"][0]["geometry"]["coordinates"] = map(float, pointVal)
 	elif shape_rand == "LineString":
-		generateLineString()
+		# Create LineString coordinates
+		geoMessage["features"][0]["geometry"]["coordinates"] = []
+		pointVal1 = generatePoint()
+		pointVal2 = generatePoint()	
+		geoMessage["features"][0]["geometry"]["coordinates"].append(map(float, pointVal1))
+		geoMessage["features"][0]["geometry"]["coordinates"].append(map(float, pointVal2))		
 	else:
-		generatePolygon()
+		countNoOfPointsInPolygon = random.randint(3,8)
+		geoMessage["features"][0]["geometry"]["coordinates"] = []
+		geoMessage["features"][0]["geometry"]["coordinates"].append("")
+		geoMessage["features"][0]["geometry"]["coordinates"][0] = []
+		pointVal1 = generatePoint()
+		geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal1))
+
+		for items in range(0,countNoOfPointsInPolygon-1):
+			pointVal = generatePoint()
+			geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal))
+		geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal1))
 
 	geoMessage["features"][0]["geometry"]["type"] = shape_rand
+
 	print json.dumps(geoMessage)
