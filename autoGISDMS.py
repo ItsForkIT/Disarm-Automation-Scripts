@@ -3,6 +3,10 @@ import datetime
 import random
 import exrex
 import json
+from shapely.geometry.polygon import LinearRing
+from shapely.geometry import MultiPoint, Point
+from math import sin,cos,pi
+import numpy as np
 
 # To output color text in terminal
 class color:
@@ -129,11 +133,12 @@ for i in range(noOfFiles):
 	geoMessage["features"] = []
 	geoMessage["features"].append("")
 	geoMessage["features"][0] = {}
-	
+
+	geoMessage["features"][0]["type"] = "Feature"
+
 	geoMessage["features"][0]["properties"] = {}
 	geoMessage["features"][0]["properties"]["PO"] = {}
 	geoMessage["features"][0]["properties"]["PR"] = {}
-	geoMessage["features"][0]["type"] = "Feature"
 	geoMessage["features"][0]["properties"]["Source"] = random.choice(source_list) 
 	geoMessage["features"][0]["properties"]["PO"]["timestamp"] = getTime()
 	geoMessage["features"][0]["properties"]["PR"]["timestamp"] = getTime()
@@ -143,6 +148,7 @@ for i in range(noOfFiles):
 
 	# Generate Random Shapes (1 - Point, 2 - LineString, 3 - Polygon)
 	shape_rand = "Polygon"
+	geoMessage["features"][0]["geometry"]["type"] = shape_rand
 
 	if shape_rand == "Point":
 		# Create Point coordinates
@@ -156,18 +162,32 @@ for i in range(noOfFiles):
 		geoMessage["features"][0]["geometry"]["coordinates"].append(map(float, pointVal1))
 		geoMessage["features"][0]["geometry"]["coordinates"].append(map(float, pointVal2))		
 	else:
-		countNoOfPointsInPolygon = random.randint(3,8)
+		countNoOfPointsInPolygon = random.randint(4,8)
 		geoMessage["features"][0]["geometry"]["coordinates"] = []
 		geoMessage["features"][0]["geometry"]["coordinates"].append("")
 		geoMessage["features"][0]["geometry"]["coordinates"][0] = []
 		pointVal1 = generatePoint()
-		geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal1))
-
-		for items in range(0,countNoOfPointsInPolygon-1):
-			pointVal = generatePoint()
-			geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal))
-		geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal1))
-
-	geoMessage["features"][0]["geometry"]["type"] = shape_rand
-
+		
+		x = [float(pointVal1[0])];
+		y = [float(pointVal1[1])];
+		r = 0;
+		angle = 0
+		for i in range(1,countNoOfPointsInPolygon):
+		    angle += 0.8 + random.uniform(0, 1) * 0.8
+		    if angle > 2 * pi:
+		    	break   #stop before it becomes convex
+		    r = (0.1 + random.uniform(0, 1) * 0.009+random.uniform(0, 1)*0.1)
+		    x.append(x[i - 1] + r * cos(angle));
+		    y.append(y[i - 1] + r * sin(angle));
+		x.append(x[0])
+		y.append(y[0])
+		combined = np.vstack((x, y)).T.tolist()
+		geoMessage["features"][0]["geometry"]["coordinates"][0] = list(combined)
+		
+		# for items in range(0,countNoOfPointsInPolygon-1):
+		# 	pointVal = generatePoint()
+		# 	arr.append(pointVal)
+		# 	geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal))
+		#geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal1))
+		
 	print json.dumps(geoMessage)
