@@ -51,7 +51,8 @@ noOfDevices = int(sys.argv[4])
 TTL = 50
 time_range = int(sys.argv[5])
 dirName = sys.argv[6]
-
+if not os.path.exists(dirName):
+    os.makedirs(dirName)
 type_list = ["Victim","Shelter","Food","Health"]
 shape_list = ["Point", "LineString", "Polygon"]
 source_list = []
@@ -190,4 +191,10 @@ for i in range(noOfFiles):
 		# 	geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal))
 		#geoMessage["features"][0]["geometry"]["coordinates"][0].append(map(float, pointVal1))
 		
-	print json.dumps(geoMessage)
+		
+	d = json.dumps(geoMessage)
+    
+	filename="GIS_50_Gis_" + str(geoMessage["features"][0]["properties"]["Source"])+ "_defaultMCS_"+str(geoMessage["features"][0]["properties"]["PR"]["coordinate"][0])+"_"+str(geoMessage["features"][0]["properties"]["PR"]["coordinate"][1])+"_"+str(geoMessage["features"][0]["properties"]["PR"]["timestamp"])+"_"+str(files)+'.txt'
+	with open(os.path.join(dirName, filename), 'wb') as tempfile:
+		tempfile.write(d)
+	tempfile.close()
