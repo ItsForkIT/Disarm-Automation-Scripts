@@ -48,11 +48,12 @@ static Runnable decrypter  = new Runnable() {
 
 
 public static void main(String args[]){
-//    sourcePath = args[0];
-//    destPath = args[1];
-    sourcePath = "/home/bishakh/DMS/sync/SurakshitKml";
-    destPath = "/home/bishakh/DMS/decrypted";
-    volunteerKeyPath = "/home/bishakh/DMS/volunteer_pri.bgp";
+    sourcePath = args[0];
+    destPath = args[1];
+    volunteerKeyPath = args[2];
+//    sourcePath = "/home/bishakh/DMS/sync/SurakshitKml";
+//    destPath = "/home/bishakh/DMS/decrypted";
+//    volunteerKeyPath = "/home/bishakh/DMS/volunteer_pri.bgp";
 
 
 
@@ -68,7 +69,7 @@ public static void main(String args[]){
 
 
 
-System.out.println("Hooa");
+System.out.println("++++++++++ Decrypter Started +++++++++");
 }
 
 
