@@ -10,10 +10,12 @@ static Runnable decrypter  = new Runnable() {
     @Override
     public void run() {
         while(true){
+            System.out.println("Scanning: " + sourcePath);
             File dir = new File(sourcePath);
             File[] directoryListing = dir.listFiles();
             if (directoryListing != null) {
                 for (File child : directoryListing) {
+                    System.out.println(child.getAbsolutePath());
 
                     if(child.getName().contains("volunteer")){
                         File destFile = new File(destPath + File.separator + child.getName().replace("bgp", "kml"));
@@ -34,6 +36,8 @@ static Runnable decrypter  = new Runnable() {
             } else {
 
             }
+            System.out.println("===============================");
+
 
             try {
                 Thread.sleep(5000);
