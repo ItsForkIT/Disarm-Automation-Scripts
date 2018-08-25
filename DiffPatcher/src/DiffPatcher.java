@@ -1,6 +1,6 @@
 import org.apache.commons.io.FilenameUtils;
 
-import java.io.File;
+import java.io.*;
 import java.util.HashMap;
 
 public class DiffPatcher {
@@ -64,11 +64,38 @@ public class DiffPatcher {
 //        }
 
         for (File file : sourceDestDir.listFiles()) {
-            String[] name = file.getName().split("_");
-            if (myDiffFiles.containsKey(name[0])) {
-                File diff = myDiffFiles.get(name[0]);
-                DiffUtils.applyPatch(file, diff, latestDestDir);
+            if (file.getName().endsWith("kml")) {
+                String[] name = file.getName().split("_");
+                if (myDiffFiles.containsKey(name[0])) {
+                    File diff = myDiffFiles.get(name[0]);
+                    DiffUtils.applyPatch(file, diff, latestDestDir);
+                } else {
+                    String deltaName = FilenameUtils.getBaseName(file.getName());
+                    File destination = new File(latestDestDir + "/" + deltaName + ".kml");
+                    try {
+                        copyFileUsingStream(file, destination);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+        }
+    }
+
+    private static void copyFileUsingStream(File source, File dest) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } finally {
+            is.close();
+            os.close();
         }
     }
 }

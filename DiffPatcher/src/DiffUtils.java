@@ -1,4 +1,5 @@
 import ie.wombat.jbdiff.JBPatch;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -20,10 +21,16 @@ public class DiffUtils {
     public static void applyPatch(File source, File delta, File latestDestDir) {
         if (delta != null) {
             String deltaName = FilenameUtils.getBaseName(delta.getName());
+            String name = deltaName.split("_")[0];
             File destination = new File(latestDestDir + "/" + deltaName + ".kml");
             try {
                 JBPatch.bspatch(source, destination, delta);
                 System.out.println("Patching Succeeded");
+                for (File file : latestDestDir.listFiles()) {
+                    if (file.getName().startsWith(name) && !file.getName().equals(destination.getName())) {
+                        FileUtils.forceDelete(file);
+                    }
+                }
 //                FileUtils.forceDelete(delta);
             } catch (Exception e) {
                 e.printStackTrace();
