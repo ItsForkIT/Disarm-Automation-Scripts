@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jbdiff">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/jbdiff.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

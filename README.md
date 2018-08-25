@@ -18,3 +18,10 @@ To run the script follow the steps:
     ```
     java -jar MCSDecrypter.jar /home/bishakh/DMS/sync/SurakshitKml /home/bishakh/DMS/decrypted  /home/bishakh/DMS/volunteer_pri.bgp
     ```
+
+
+DiffPatcher
+-----------
+```
+java -jar DiffPatcher.jar <path to SurakshitDiff> < path to LatestKML Output>  < path to SurakshitKml - decrypted folder>
+```

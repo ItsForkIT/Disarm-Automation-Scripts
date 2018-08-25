@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DiffPatcher:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DiffPatcher_jar</output-path>
+    <root id="archive" name="DiffPatcher.jar">
+      <element id="module-output" name="DiffPatcher" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/commons-io-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jbdiff.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
