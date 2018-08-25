@@ -30,7 +30,7 @@ public class DiffPatcher {
         File[] diffFiles = diffDir.listFiles();
         HashMap<String, File> myDiffFiles = new HashMap<>();
         HashMap<String, Integer> latestVersion = new HashMap<>();
-        if (diffFiles == null) {
+        if (diffFiles == null || sourceDestDir == null) {
             System.out.println("No files found");
             return;
         }

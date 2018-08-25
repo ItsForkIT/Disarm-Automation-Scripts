@@ -20,7 +20,7 @@ static Runnable decrypter  = new Runnable() {
                     if(child.getName().contains("volunteer")){
                         File destFile = new File(destPath + File.separator + child.getName().replace("bgp", "kml"));
                         if(!destFile.exists()) {
-                            System.out.println(child.getAbsolutePath());
+                            System.out.println("Decrypting.." + child.getAbsolutePath() + " to " + destPath);
                             try {
                                 KeyBasedFileProcessor.decrypt(child.getAbsolutePath(), volunteerKeyPath, "volunteer@disarm321", destPath);
                             } catch (Exception e) {
@@ -30,6 +30,9 @@ static Runnable decrypter  = new Runnable() {
                         else {
                             System.out.println("SKIPPING AS EXISTS: " + child.getAbsolutePath());
                         }
+
+                    }else{
+                        System.out.println("SKIPPING AS NOT VOLUNTEER: " + child.getAbsolutePath());
 
                     }
                 }
