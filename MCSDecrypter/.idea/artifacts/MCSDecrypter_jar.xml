@@ -7,6 +7,7 @@
       </element>
       <element id="file-copy" path="$PROJECT_DIR$/bcprov-jdk15on-1.59.jar" />
       <element id="file-copy" path="$PROJECT_DIR$/bcpg-jdk15on-1.59.jar" />
+      <element id="library" level="project" name="commons-io-2.6" />
     </root>
   </artifact>
 </component>
