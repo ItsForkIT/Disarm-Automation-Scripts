@@ -4,7 +4,8 @@ public class decrypter {
 
     static String sourcePath;
     static String destPath;
-    static String volunteerKeyPath;
+    static String volunteerPrivKeyPath;
+    static String volunteerPubKeyPath;
 
 static Runnable decrypter  = new Runnable() {
     @Override
@@ -22,7 +23,7 @@ static Runnable decrypter  = new Runnable() {
                         if(!destFile.exists()) {
                             System.out.println("Decrypting.." + child.getAbsolutePath() + " to " + destPath);
                             try {
-                                KeyBasedFileProcessor.decrypt(child.getAbsolutePath(), volunteerKeyPath, "volunteer@disarm321", destPath);
+                                KeyBasedFileProcessor.decrypt(child.getAbsolutePath(), volunteerPrivKeyPath, volunteerPubKeyPath,  "volunteer@disarm321", destPath);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -57,7 +58,8 @@ static Runnable decrypter  = new Runnable() {
 public static void main(String args[]){
     sourcePath = args[0];
     destPath = args[1];
-    volunteerKeyPath = args[2];
+    volunteerPrivKeyPath = args[2];
+    volunteerPubKeyPath = args[3];
 //    sourcePath = "/home/bishakh/DMS/sync/SurakshitKml";
 //    destPath = "/home/bishakh/DMS/decrypted";
 //    volunteerKeyPath = "/home/bishakh/DMS/volunteer_pri.bgp";

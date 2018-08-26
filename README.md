@@ -10,13 +10,14 @@ To run the script follow the steps:
     ```
     cd Disarm-Automation-Scripts/MCSDecrypter/out/artifacts/MCSDecrypter_jar
     ```
+3. Output Folder should contain a folder named tempDecrypt
 2. Run the MCSDecrypter.jar script
 	```
-    java -jar MCSDecrypter.jar <path to /Working/SurakshitKml directory> <decrypted destination directory>  <path to volunteer private key>
+    java -jar MCSDecrypter.jar <path to /Working/SurakshitKml directory> <decrypted destination directory>  <path to volunteer private key> <path to volunteer public key>
     ```
     Example:
     ```
-    java -jar MCSDecrypter.jar /home/bishakh/DMS/sync/SurakshitKml /home/bishakh/DMS/decrypted  /home/bishakh/DMS/volunteer_pri.bgp
+    java -jar MCSDecrypter.jar /home/bishakh/DMS/Working/SurakshitKml /home/bishakh/DMS/decrypted /home/bishakh/DMS/Working/pgpKey/pri_volunteer.bgp /home/bishakh/DMS/Working/pgpKey/pub_volunteer.bgp
     ```
 
 
