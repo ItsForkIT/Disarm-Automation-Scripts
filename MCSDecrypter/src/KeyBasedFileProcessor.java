@@ -325,8 +325,8 @@ public class KeyBasedFileProcessor
 //                    FileUtils.forceDelete(file);
                 }
                 else{
-//                    File s = new File(originalFileNamme);
-//                    FileUtils.moveFile(file,s);
+                    File s = new File(outputFilePath + "/" + FilenameUtils.getBaseName(outFileName)+".kml");
+                    FileUtils.moveFile(temp_file,s);
 //                    File latestKml = Environment.getExternalStoragePublicDirectory("DMS/KML/Dest/LatestKml/"+FilenameUtils.getBaseName(outFileName)+"_0.kml");
 //                    FileUtils.copyFile(s,latestKml);
                 }
