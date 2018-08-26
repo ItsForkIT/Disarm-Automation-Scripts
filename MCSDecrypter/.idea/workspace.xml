@@ -29,8 +29,8 @@
       <file leaf-file-name="KeyBasedFileProcessor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/KeyBasedFileProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="314" column="101" selection-start-line="314" selection-start-column="101" selection-end-line="314" selection-end-column="101" />
+            <state relative-caret-position="-53">
+              <caret line="348" column="53" selection-start-line="348" selection-start-column="53" selection-end-line="348" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -664,8 +664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/KeyBasedFileProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="314" column="101" selection-start-line="314" selection-start-column="101" selection-end-line="314" selection-end-column="101" />
+        <state relative-caret-position="-53">
+          <caret line="348" column="53" selection-start-line="348" selection-start-column="53" selection-end-line="348" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
